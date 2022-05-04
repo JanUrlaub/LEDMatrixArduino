@@ -68,10 +68,13 @@ void handleRoot() {
   int modEnd = MAX_DEVICES - 1;
 
   String message = webserver.arg(0);
+  message.toUpperCase();
 
   webserver.send(200, "text/html", "<h1>You are connected</h1><p>"+message+"</p>");
 
   mx.control(modStart, modEnd, MD_MAX72XX::UPDATE, MD_MAX72XX::OFF);
+
+  mx.clear();
 
   int str_length = message.length()+1;
   char buff[str_length];

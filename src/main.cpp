@@ -6,7 +6,7 @@
 #include <ESP8266WebServer.h>
 
 #define APSSID "ESPap"
-#define APPSK  "1234"
+#define APPSK  "langespasswort"
 
 #define HARDWARE_TYPE MD_MAX72XX::FC16_HW
 #define MAX_DEVICES 8
@@ -99,7 +99,15 @@ void setup() {
   mx.clear();
   Serial.println("LED Matrix started");
 
-  WiFi.softAP(APSSID, APPSK);
+  bool wifi = WiFi.softAP(APSSID, APPSK);
+  if(wifi)
+  {
+    Serial.println("Wifi started");
+  }
+  else
+  {
+    Serial.println("Wifi failed");
+  }
 
   IPAddress myIP = WiFi.softAPIP();
   Serial.print("AP IP address: ");

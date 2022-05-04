@@ -43,7 +43,7 @@ uint8_t reverse2(uint8_t in)
 }
 
 
-int setText(char text, int offset)
+int setChar(char text, int offset)
 {
 
   uint8_t   cBuf[LEDROWS];
@@ -57,17 +57,16 @@ int setText(char text, int offset)
   mx.getChar(text+128, LEDROWS, cBuf);
   for(int i=0;i<charLength;i++)
   {
-    mx.setColumn(57+(charLength-i-offset),cBuf[i]);
+    mx.setColumn(63-i-offset,cBuf[i]);
   }
   return offset+charLength+1;
 }
 
-void handleRoot() {
-  
+void setText(String message)
+{
   int modStart = 0;
   int modEnd = MAX_DEVICES - 1;
 
-  String message = webserver.arg(0);
   message.toUpperCase();
 
   webserver.send(200, "text/html", "<h1>You are connected</h1><p>"+message+"</p>");
@@ -85,10 +84,15 @@ void handleRoot() {
   for(int i = 0; i < str_length-1; i++)
   {
     Serial.println(buff[i]);
-    offset = setText(buff[i], offset);
+    offset = setChar(buff[i], offset);
   }
 
   mx.control(modStart, modEnd, MD_MAX72XX::UPDATE, MD_MAX72XX::ON);
+}
+
+void handleRoot() {
+  String message = webserver.arg(0);
+  setText(message);
 }
 
 void setup() {
@@ -118,6 +122,8 @@ void setup() {
   webserver.on("/", handleRoot);
   webserver.begin();
   Serial.println("HTTP server started");
+
+  setText("Kath");
 }
 
 void loop() {

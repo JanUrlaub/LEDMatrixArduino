@@ -67,7 +67,10 @@ void setText(String message)
   int modStart = 0;
   int modEnd = MAX_DEVICES - 1;
 
-  message.toUpperCase();
+  if(message.length()<=0)
+  {
+    return;
+  }
 
   webserver.send(200, "text/html", "<h1>You are connected</h1><p>"+message+"</p>");
 
@@ -123,7 +126,7 @@ void setup() {
   webserver.begin();
   Serial.println("HTTP server started");
 
-  setText("Kath");
+  setText("Kathi");
 }
 
 void loop() {

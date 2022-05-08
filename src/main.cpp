@@ -11,6 +11,9 @@
 #define HARDWARE_TYPE MD_MAX72XX::FC16_HW
 #define MAX_DEVICES 8
 #define LEDROWS 8
+#define MODSTART 0
+#define MODEND 7
+#define BRIGHTNESS 0x0 
 
 #define CLK_PIN   14  // or SCK or D5 or grün
 #define DATA_PIN  13  // or MOSI or D7 or orange
@@ -64,8 +67,6 @@ int setChar(char text, int offset)
 
 void setText(String message)
 {
-  int modStart = 0;
-  int modEnd = MAX_DEVICES - 1;
 
   if(message.length()<=0)
   {
@@ -74,7 +75,7 @@ void setText(String message)
 
   webserver.send(200, "text/html", "<h1>You are connected</h1><p>"+message+"</p>");
 
-  mx.control(modStart, modEnd, MD_MAX72XX::UPDATE, MD_MAX72XX::OFF);
+  mx.control(MODSTART, MODEND, MD_MAX72XX::UPDATE, MD_MAX72XX::OFF);
 
   mx.clear();
 
@@ -90,7 +91,7 @@ void setText(String message)
     offset = setChar(buff[i], offset);
   }
 
-  mx.control(modStart, modEnd, MD_MAX72XX::UPDATE, MD_MAX72XX::ON);
+  mx.control(MODSTART, MODEND, MD_MAX72XX::UPDATE, MD_MAX72XX::ON);
 }
 
 void handleRoot() {
@@ -106,6 +107,7 @@ void setup() {
 
   mx.begin();
   mx.setFont(kathiFont);
+  mx.control(MODSTART, MODEND, MD_MAX72XX::INTENSITY, BRIGHTNESS);
   mx.clear();
   Serial.println("LED Matrix started");
 

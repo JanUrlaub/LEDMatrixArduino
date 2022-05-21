@@ -15,17 +15,17 @@
 #define MODEND 7
 #define BRIGHTNESS 0x0 
 
-#define CLK_PIN   14  // or SCK or D5 or grün
-#define DATA_PIN  13  // or MOSI or D7 or orange
-#define CS_PIN    15  // or SS or D8 or gelb
-MD_MAX72XX mx = MD_MAX72XX(HARDWARE_TYPE, CS_PIN, MAX_DEVICES);
+//#define CLK_PIN   14  // or SCK or D5 or grün
+//#define DATA_PIN  13  // or MOSI or D7 or orange
+//#define CS_PIN    15  // or SS or D8 or gelb
+//MD_MAX72XX mx = MD_MAX72XX(HARDWARE_TYPE, CS_PIN, MAX_DEVICES);
 
 ESP8266WebServer webserver(80);
 
-//#define CLK_PIN   4  // or SCK or D2 or grün
-//#define DATA_PIN  0  // or MOSI or D3 or orange
-//#define CS_PIN    2  // or SS or D4 or gelb
-//MD_MAX72XX mx = MD_MAX72XX(HARDWARE_TYPE, DATA_PIN, CLK_PIN, CS_PIN, MAX_DEVICES);
+#define CLK_PIN   4  // or SCK or D2 or grün
+#define DATA_PIN  2  // or MOSI or D4 or orange
+#define CS_PIN    0  // or SS or D3 or gelb
+MD_MAX72XX mx = MD_MAX72XX(HARDWARE_TYPE, DATA_PIN, CLK_PIN, CS_PIN, MAX_DEVICES);
 
 
 uint8_t reverse2(uint8_t in)
